@@ -1,5 +1,5 @@
 <?php
-
+require_once 'config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginData = [
@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'username' => $_POST['username'],
         'password' => $_POST['password']
     ];
-}
 
     $errors = [];
 
@@ -21,8 +20,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         array_push($errors, "Le mot de passe est obligatoire.");
     }
 
+    // If no errors, proceed with registration
+    if (empty($errors)) {
+        // Hash the password
+        $hashed_password = password_hash($loginData['password'], PASSWORD_DEFAULT);
 
-    ?>
+        // Prepare the insert statement
+        $sql = "INSERT INTO users (firstname, lastname, gender, username, password) VALUES (?, ?, ?, ?, ?)";
+
+        if ($stmt = mysqli_prepare($conn, $sql)) {
+            mysqli_stmt_bind_param(
+                $stmt,
+                "sssss",
+                $loginData['firstname'],
+                $loginData['lastname'],
+                $loginData['gender'],
+                $loginData['username'],
+                $hashed_password
+            );
+
+            if (mysqli_stmt_execute($stmt)) {
+                echo "Inscription réussie!";
+            } else {
+                echo "Erreur: " . mysqli_error($conn);
+            }
+
+            mysqli_stmt_close($stmt);
+        }
+    }
+}
+
+?>
 
 
 <!DOCTYPE html>
@@ -30,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Café HEIG</title>
 
 </head>
@@ -41,10 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="logo">Café HEIG</div>
         <div class="menu" id="menu">
             <a href="./index.html">Home</a>
+            <a href="./about.html">À propos</a>
             <a href="./register.php">Sign in</a>
             <a href="./login.php">Sign up</a>
         </div>
-        <div class="toggle" id="toggle">☰</div>
     </nav>
     <h1>Page de connexion</h1>
 
