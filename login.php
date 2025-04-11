@@ -11,7 +11,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 }
 
-?>
+    $errors = [];
+
+    if (empty($loginData['firstname'])) {
+        array_push($errors, "Le prénom est obligatoire.");
+    } elseif (empty($loginData['username'])) {
+        array_push($errors, "Le pseudo est obligatoire.");
+    } elseif (empty($loginData['password'])) {
+        array_push($errors, "Le mot de passe est obligatoire.");
+    }
+
+
+    ?>
 
 
 <!DOCTYPE html>
