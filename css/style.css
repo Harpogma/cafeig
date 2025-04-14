@@ -2,96 +2,104 @@
 
 html {
     box-sizing: border-box;
-  }
+}
   
-  body {
-    margin: 0;
-    font-family: 'Kodchasan', sans-serif;
-    background-color: #f4f4f4;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: black;
-    color: white;
-  }
-  
+body {
+  margin: 0;
+  font-family: 'Kodchasan', sans-serif;
+  background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: black;
+  color: white;
+}
+
+.menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+}
+
+.toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 600px) {
   .menu {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .menu a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .toggle {
     display: none;
-    cursor: pointer;
-    font-size: 1.5rem;
-  }
-  
-  @media (max-width: 600px) {
-    .menu {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      background: black;
-      text-align: center;
-      padding: 1rem 0;
-    }
-  
-    .menu.show {
-      display: flex;
-    }
-  
-    .toggle {
-      display: block;
-    }
-  }
-  
-
-  /* About style */
-
-  .about-me-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: black;
     text-align: center;
+    padding: 1rem 0;
   }
 
-  .about-profile-picture img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 50px;
+  .menu.show {
+    display: flex;
+  }
 }
 
-.about-me {
-    width: 500px;
-    text-align: left;
+/* Welcome style */
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  text-align: center;
 }
 
-.about-project-container {
+.welcome-container p {
+    margin: 0;
+    line-height: 1.5rem;
+}
+
+/* Login buttons style */
+.login-buttons-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.login-buttons a {
+  background-color: #A2F0FC; /* Green */
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+.login-buttons a:hover {
+  background-color: #A2FCEB; /* Darker green */
+}
+
+/* About style */
+
+.about-me-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -100,14 +108,37 @@ html {
   text-align: center;
 }
 
+.about-profile-picture img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 50px;
+}
+
+.about-me {
+  width: 500px;
+  text-align: left;
+}
+
+.about-project-container {
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 2rem;
+text-align: center;
+}
+
 .about-project-picture img {
-    width: 300px;
-    height: 200px;
-    border-radius: 10px;
-    object-fit: cover;
-    margin: 20px;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin: 20px;
 }
 .about-project {
-    width: 500px;
-    text-align: left;
+  width: 500px;
+  text-align: left;
 }
+
