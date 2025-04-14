@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="./css/style.css">
-  <title>Café HEIG</title>
- 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Café HEIG</title>
+
 </head>
+
 <body>
 
     <nav class="nav">
         <div class="logo">Café HEIG</div>
         <div class="menu" id="menu">
-          <a href="./index.html">Home</a>
-          <a href="./about.html">À propos</a>
-          <a href="./register.php">Sign in</a>
-          <a href="./login.php">Sign up</a>
+            <a href="./index.html">Home</a>
+            <a href="./about.html">À propos</a>
+            <a href="./register.php">Sign in</a>
+            <a href="./login.php">Sign up</a>
         </div>
     </nav>
 
@@ -29,7 +31,7 @@
             <p>Je suis persuadé que c'est en faisant des projets concrets que l'on apprend de nouvelles choses, surtout dans un domaine comme le développement.</p>
         </div>
     </div>
-    
+
     <div class="about-project-container">
         <div class="about-project">
             <h2>À propos du projet</h2>
@@ -40,7 +42,8 @@
         <div class="about-project-picture">
             <img src="./images/AdobeStock_159183621.jpeg" alt="Image du projet">
         </div>
-    </div>"
-    
+    </div>
+
 </body>
+
 </html>
