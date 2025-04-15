@@ -21,10 +21,8 @@ if (mysqli_query($conn, $sql)) {
     // Create users table if it doesn't exist
     $sql = "CREATE TABLE IF NOT EXISTS users (
         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-        firstname VARCHAR(50) NOT NULL,
-        lastname VARCHAR(50),
-        gender VARCHAR(20),
         username VARCHAR(50) NOT NULL UNIQUE,
+        email VARCHAR(70),        
         password VARCHAR(255) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";

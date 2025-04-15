@@ -3,10 +3,7 @@ require_once 'config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginData = [
-        'firstname' => $_POST['firstname'],
-        'lastname' => $_POST['lastname'],
-        'gender' => $_POST['gender'],
-        'username' => $_POST['username'],
+        'email' => $_POST['email'],
         'password' => $_POST['password']
     ];
 
@@ -22,27 +19,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If no errors, proceed with registration
     if (empty($errors)) {
-        // Hash the password
-        $hashed_password = password_hash($loginData['password'], PASSWORD_DEFAULT);
-
-        // Prepare the insert statement
-        $sql = "INSERT INTO users (firstname, lastname, gender, username, password) VALUES (?, ?, ?, ?, ?)";
-
+        // check in the DB if the email exists and if the password is right, then connect the user
+        $sql = "SELECT * FROM users WHERE email = ?";
         if ($stmt = mysqli_prepare($conn, $sql)) {
-            mysqli_stmt_bind_param(
-                $stmt,
-                "sssss",
-                $loginData['firstname'],
-                $loginData['lastname'],
-                $loginData['gender'],
-                $loginData['username'],
-                $hashed_password
-            );
+            mysqli_stmt_bind_param($stmt, "s", $loginData['email']);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-            if (mysqli_stmt_execute($stmt)) {
-                echo "Inscription réussie!";
+            if (mysqli_num_rows($result) > 0) {
+                $user = mysqli_fetch_assoc($result);
+                if (password_verify($loginData['password'], $user['password'])) {
+                    // Password is correct, proceed with login
+                    session_start();
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    header("Location: ./dashboard.php");
+                    exit();
+                } else {
+                    array_push($errors, "Mot de passe incorrect.");
+                }
             } else {
-                echo "Erreur: " . mysqli_error($conn);
+                array_push($errors, "Aucun utilisateur trouvé avec cette adresse email.");
             }
 
             mysqli_stmt_close($stmt);
