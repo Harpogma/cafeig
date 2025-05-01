@@ -1,35 +1,38 @@
 <?php
-define('DB_SERVER', 'localhost:3306');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'cafeig');
+require_once __DIR__ . '/load_config.php';
+$config = loadConfig();
 
-// Attempt to connect to MySQL database
-$conn = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+$host = $config['database']['host'];
+$port = $config['database']['port'];
+$dbname = $config['database']['dbname'];
+$user = $config['database']['user'];
+$password = $config['database']['password'];
 
-// Check connection
-if ($conn === false) {
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-}
+try {
+    $pdo = new PDO("pgsql:host=" . $host . ";port=" . $port . ";dbname=postgres", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Create database if it doesn't exist
-$sql = "CREATE DATABASE IF NOT EXISTS " . DB_NAME;
-if (mysqli_query($conn, $sql)) {
-    // Select the database
-    mysqli_select_db($conn, DB_NAME);
+    $sql = "SELECT 1 FROM pg_database WHERE datname = :dbname";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':dbname' => $dbname]);
 
-    // Create users table if it doesn't exist
+    if ($stmt->fetchColumn() === false) {
+        $pdo->exec("CREATE DATABASE " . $dbname);
+    }
+
+    $pdo = new PDO("pgsql:host=" . $host . ";port=" . $port . ";dbname=" . $dbname, $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     $sql = "CREATE TABLE IF NOT EXISTS users (
-        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        id SERIAL PRIMARY KEY,
         username VARCHAR(50) NOT NULL UNIQUE,
-        email VARCHAR(70),        
+        email VARCHAR(70) UNIQUE,
         password VARCHAR(255) NOT NULL,
+        is_admin BOOLEAN DEFAULT FALSE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
 
-    if (!mysqli_query($conn, $sql)) {
-        echo "ERROR: Could not create table. " . mysqli_error($conn);
-    }
-} else {
-    echo "ERROR: Could not create database. " . mysqli_error($conn);
+    $pdo->exec($sql);
+} catch (PDOException $e) {
+    die("ERROR: " . $e->getMessage());
 }

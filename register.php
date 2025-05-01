@@ -3,8 +3,8 @@ require_once 'config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $loginData = [
-    'username' => $_POST['username'],
-    'email' => $_POST['email'],
+    'username' => trim($_POST['username']),
+    'email' => trim($_POST['email']),
     'password' => $_POST['password']
   ];
 
@@ -23,74 +23,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors[] = "Le mot de passe est obligatoire.";
   }
 
-  // Check if username exists
+  // Check if username or email exist
   if (empty($errors)) {
-    $sql = "SELECT * FROM users WHERE username = ?";
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-      mysqli_stmt_bind_param($stmt, "s", $loginData['username']);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
+    $stmt = $pdo->prepare("SELECT 1 FROM users WHERE username = :username OR email = :email");
+    $stmt->execute([
+      ':username' => $loginData['username'],
+      ':email' => $loginData['email']
+    ]);
 
-      if (mysqli_num_rows($result) > 0) {
-        $errors[] = "Le pseudo existe déjà.";
-      }
-
-      mysqli_stmt_close($stmt);
-    }
-  }
-
-  // Check if email exists
-  if (empty($errors)) {
-    $sql = "SELECT * FROM users WHERE email = ?";
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-      mysqli_stmt_bind_param($stmt, "s", $loginData['email']);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-
-      if (mysqli_num_rows($result) > 0) {
-        $errors[] = "L'adresse email existe déjà.";
-      }
-
-      mysqli_stmt_close($stmt);
+    if ($stmt->fetch()) {
+      $errors[] = "Le pseudo ou l'adresse email existe déjà.";
     }
   }
 
   // Register user if no errors
   if (empty($errors)) {
-    $hashed_password = password_hash($loginData['password'], PASSWORD_DEFAULT);
-    $sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    $hashedPassword = password_hash($loginData['password'], PASSWORD_DEFAULT);
 
-    if ($stmt = mysqli_prepare($conn, $sql)) {
-      mysqli_stmt_bind_param(
-        $stmt,
-        "sss",
-        $loginData['username'],
-        $loginData['email'],
-        $hashed_password
-      );
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+    $success = $stmt->execute([
+      ':username' => $loginData['username'],
+      ':email' => $loginData['email'],
+      ':password' => $hashedPassword
+    ]);
 
-      if (mysqli_stmt_execute($stmt)) {
-        echo "Inscription réussie!";
-      } else {
-        echo "Erreur: " . mysqli_error($conn);
-      }
-
-      mysqli_stmt_close($stmt);
+    if ($success) {
+      echo "Inscription réussie!";
+    } else {
+      echo "Erreur lors de l'inscription.";
     }
   } else {
     // Display errors
     foreach ($errors as $error) {
-      echo $error;
+      echo "<p style='color: red;'>$error</p>";
     }
-    $errors = [];
   }
 }
-
 ?>
 
 
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-white">
+<html lang="fr" class="h-full">
 
 <head>
   <meta charset="UTF-8">
@@ -100,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 
-<body class="h-full">
+<body class="gradient h-screen grid grid-rows-7">
 
-  <?php include './includes/navbar.php'; ?>
+  <?php require './includes/navbar.php'; ?>
 
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="grid min-h-full px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Créer un compte</h2>
     </div>
@@ -135,13 +108,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
         </div>
 
-        <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+        <div class="flex justify-center">
+          <button type="button" class="flex text-white bg-black rounded-4xl text-base px-5 py-1 justify-center">S'inscrire</button>
         </div>
       </form>
 
     </div>
   </div>
+  <?php require './includes/footer.php'; ?>
 
 </body>
 
