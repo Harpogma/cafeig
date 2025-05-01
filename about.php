@@ -5,20 +5,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./css/style.css">
     <title>Café HEIG</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
 </head>
 
-<body>
+<body class="gradient h-screen grid">
 
-    <nav class="nav">
-        <div class="logo">Café HEIG</div>
-        <div class="menu" id="menu">
-            <a href="./index.html">Home</a>
-            <a href="./about.html">À propos</a>
-            <a href="./register.php">Sign in</a>
-            <a href="./login.php">Sign up</a>
-        </div>
-    </nav>
+    <?php require './includes/navbar.php'; ?>
 
     <div class="about-me-container">
         <div class="about-profile-picture">
@@ -43,6 +36,7 @@
             <img src="./images/AdobeStock_159183621.jpeg" alt="Image du projet">
         </div>
     </div>
+    <?php require './includes/footer.php'; ?>
 
 </body>
 
