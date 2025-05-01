@@ -1,7 +1,6 @@
 <?php
-// Start session and check if user is logged in
 session_start();
-if (!isset($_SESSION['user_logged_in'])) {
+if (!isset($_SESSION['user_id'])) {
     header("Location: ./login.php");
     exit();
 }
@@ -9,54 +8,33 @@ if (!isset($_SESSION['user_logged_in'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Dashboard</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-        }
-        .navbar {
-            width: 200px;
-            background-color: #333;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            margin: 10px 0;
-        }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-        .dashboard {
-            text-align: center;
-            margin-top: 50px;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 </head>
-<body>
-    <div class="navbar">
-        <h3>Menu</h3>
-        <a href="#">Option 1</a>
-        <a href="#">Option 2</a>
-    </div>
-    <div class="content">
-        <div class="dashboard">
-            <h1>Welcome to the Dashboard</h1>
-            <p>You are logged in as: <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+
+<body class="gradient grid h-screen">
+    <?php require './includes/navbar.php'; ?>
+
+    <div class="grid grid-cols-6 py-6">
+        <div class="sidebar grid col-span-1 justify-center bg-blue-200 h-full">
+            <a href="#">Mes cafés</a>
+            <a href="#">Paramètres</a>
+        </div>
+        <div class="content grid col-span-5 justify-center">
+            <div class="dashboard">
+                <h1>Welcome to your Dashboard</h1>
+                <p>You are logged in as: <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+            </div>
         </div>
     </div>
+    <?php require './includes/footer.php'; ?>
+
 </body>
+
 </html>
