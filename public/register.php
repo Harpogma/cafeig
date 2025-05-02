@@ -1,4 +1,7 @@
 <?php
+// Class Coffee Manager
+// (c) 2025 Harpogma – Licensed under the MIT License
+// See the LICENSE file in the project root for full license text.
 require_once 'config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
