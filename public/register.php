@@ -2,7 +2,7 @@
 // Class Coffee Manager
 // (c) 2025 Harpogma – Licensed under the MIT License
 // See the LICENSE file in the project root for full license text.
-require_once 'config/db.php';
+require_once(__DIR__ . '/../config/bootstrap.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $loginData = [
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
   <title>Café HEIG</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 

@@ -1,13 +1,21 @@
 <?php
-function loadConfig($defaultPath = __DIR__ . '/config_default.ini', $customPath = __DIR__ . '/config.ini') {
-    if (!file_exists($defaultPath)) {
-        throw new Exception("Default config not found: $defaultPath");
+function loadConfig($defaultPath = BASE_PATH . '/config_default.ini', $customPath = BASE_PATH . '/config.ini') {
+
+    if (!file_exists($customPath)) {
+        throw new Exception("Custom config not found: $customPath");
     }
 
     $default = parse_ini_file($defaultPath, true);
-    $custom = file_exists($customPath) ? parse_ini_file($customPath, true) : [];
+    if ($default === false) {
+        throw new Exception("Failed to parse default config: $defaultPath");
+    }
 
-    // Merge custom into default (deep merge)
+    $custom = parse_ini_file($customPath, true);
+    if ($custom === false) {
+        throw new Exception("Failed to parse custom config: $customPath");
+    }
+
+    // Merge custom into default (shallow merge per section)
     foreach ($custom as $section => $settings) {
         if (!isset($default[$section])) {
             $default[$section] = $settings;
