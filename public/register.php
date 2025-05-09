@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="gradient h-screen grid grid-rows-7">
 
-  <?php require './includes/navbar.php'; ?>
+  <?php require '../includes/navbar.php'; ?>
 
   <div class="grid min-h-full px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
   </div>
-  <?php require './includes/footer.php'; ?>
+  <?php require '../includes/footer.php'; ?>
 
 </body>
 

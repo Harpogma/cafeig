@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Class Coffee Manager
 // (c) 2025 Harpogma – Licensed under the MIT License
 // See the LICENSE file in the project root for full license text.
@@ -15,7 +15,7 @@
 
 <body class="gradient h-screen grid grid-rows-7">
 
-  <?php require './includes/navbar.php'; ?>
+  <?php require '../includes/navbar.php'; ?>
 
   <div class="flex flex-col items-center justify-center h-80 pt-12 row-start-2 row-end-3">
     <div class="flex flex-col items-center px-6 width-full">
@@ -39,7 +39,7 @@
       </a>
     </div>
   </div>
-  <?php require './includes/footer.php'; ?>
+  <?php require '../includes/footer.php'; ?>
 </body>
 
 </html>

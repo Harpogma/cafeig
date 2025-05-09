@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Class Coffee Manager
 // (c) 2025 Harpogma – Licensed under the MIT License
 // See the LICENSE file in the project root for full license text.
@@ -16,7 +16,7 @@
 
 <body class="gradient h-screen grid">
 
-    <?php require './includes/navbar.php'; ?>
+    <?php require '../includes/navbar.php'; ?>
 
     <div class="about-me-container">
         <div class="about-profile-picture">
@@ -41,7 +41,7 @@
             <img src="./images/AdobeStock_159183621.jpeg" alt="Image du projet">
         </div>
     </div>
-    <?php require './includes/footer.php'; ?>
+    <?php require '../includes/footer.php'; ?>
 
 </body>
 

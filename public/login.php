@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="gradient h-screen grid grid-rows-7">
 
-    <?php require './includes/navbar.php'; ?>
+    <?php require '../includes/navbar.php'; ?>
     <div class="grid min-h-full px-6 py-12 lg:px-8">
         <div class="flex justify-center row-start-2 row-end-3">
             <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Se connecter</h2>
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
     </div>
-    <?php require './includes/footer.php'; ?>
+    <?php require '../includes/footer.php'; ?>
 
 </body>
 
