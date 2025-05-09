@@ -8,7 +8,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <title>Café HEIG</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
@@ -31,10 +31,10 @@
   <div class="login-buttons-container flex flex-col items-center justify-center mt-6 row-start-4 row-end-6">
     <h2 class="text-2xl">Inscription et connexion</h2>
     <div class="login-buttons flex gap-4 py-4">
-      <a href="./register.php">
+      <a href="../public/register.php">
         <button type="button" class="text-white bg-black rounded-4xl text-base px-5 py-1">S'inscrire</button>
       </a>
-      <a href="./login.php">
+      <a href="../public/login.php">
         <button type="button" class="text-white bg-black rounded-4xl text-base px-5 py-1">Se connecter</button>
       </a>
     </div>
